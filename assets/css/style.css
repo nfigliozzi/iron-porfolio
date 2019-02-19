@@ -1,0 +1,154 @@
+/*Gral. layout*/
+:root {
+  --breakpoint: 767px;
+}
+*{
+  box-sizing: border-box;
+}
+body{
+  background-color: #eeeff3;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 580px;
+  font-family: serif;
+}
+nav{
+  height: 80px;
+  width: 100vw;
+}
+main{
+  padding: 0px;
+
+  /*For paralax images*/
+	perspective: 1px;
+}
+img{width: 100%}
+
+@media (min-width: 768px){
+  body{
+    display: flex;
+    max-width: initial;
+  }
+  nav{
+    width: 80px;
+    height: 100vh;
+    max-height: 100vh;
+    background-color: white;
+    box-shadow: #92939840 4px 0 24px 4px;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: nowrap;
+    transition: width ease 350ms;
+  }
+  nav ul{
+    width: 100%;
+    flex: 0 0 100%;
+    list-style: none;
+    padding: 0;
+    overflow: hidden;
+  }
+  nav ul:first-child{
+    flex: 0 0 0%;
+    transition: width ease-in-out 300ms;
+  }
+  nav ul h1, nav ul li{
+    white-space: nowrap;
+  }
+  nav:hover{
+    width: 320px;
+  }
+  nav:hover ul:first-child{
+    flex: 0 0 100%;
+  }
+  nav:hover+*{
+    opacity: .2;
+    transition: opacity ease 350ms;
+  }
+  
+  main{
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+  }
+  img.hero,
+  main>header,
+  main>section{
+    opacity: 1;
+    scroll-snap-align: start;
+    margin: 0;
+    width: 45vw;
+    flex: 0 0 45vw;
+  }
+  img{
+    width: initial;
+  }
+}
+
+/*Hero image*/
+img.hero{
+  padding: 0;
+  background-color: #151516;
+  box-shadow: #9293988e 4px 0 24px 4px;
+  object-fit: cover;
+}
+
+/*Header page*/
+main>header{
+  padding: 20px 9vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.5fr 2fr 1fr 1fr 0.5fr;
+  grid-template-areas: "." "article" "." "footer" ".";
+}
+main>header>article{
+  grid-area: article; 
+}
+main>header>footer{
+  grid-area: footer; 
+}
+header footer ul li{
+  display: inline;
+  padding: 12px;
+}
+header footer ul li span{
+  display: none;
+}
+/*Home Paralax images*/
+main>section{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 2fr 1fr 2fr 1fr;
+  grid-template-areas: "." "image1" "." "image2" ".";
+}
+main>section:last-child{
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: "." "image" ".";
+}
+img.img1{
+  grid-area: image1;
+  transform: translateZ(.1px) scale(0.895);
+}
+img.img2{
+  grid-area: image2;
+  transform: translateZ(-.1px) scale(1.095);
+}
+img.img3{
+  grid-area: image;
+  transform: translateZ(.1px) scale(0.895);
+}
+
+
+#scroll-indicator{
+  display: none;
+  position: fixed;
+  top: 50%;
+  right: 0;
+}
+#scroll-indicator.show{
+  display: block;
+}
