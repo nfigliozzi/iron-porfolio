@@ -1,56 +1,75 @@
 /*Gral. layout*/
 :root {
-  --breakpoint: 767px;
+  --nav-height: 60px;
 }
 body{
   background-color: #eeeff3;
   padding: 0;
   margin: 0 auto;
-  max-width: 580px;
   font-family: serif;
+  display: flex;
+  flex-direction: column-reverse;
 }
-nav{
-  height: 80px;
-  width: 100vw;
-}
-main{
-  padding: 0px;
-
-  /*For paralax images*/
-	perspective: 1px;
-}
-img{width: 100%}
-
 @media (min-width: 768px){
   body{
-    display: flex;
-    max-width: initial;
+    flex-direction: row;
   }
+}
+
+/*Navigation*/
+nav{
+  background-color: white;
+  box-shadow: #92939840 0 4px 24px 4px;
+  height:  var(--nav-height);
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column-reverse;
+}
+nav ul{
+  width: 100%;
+  list-style: none;
+  padding: 3px 0px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+nav ul:first-child{
+  background-color: #f3f4f5;
+}
+nav ul:first-child li{
+  display: none;
+}
+nav ul:last-child h1{
+  display: none;
+}
+@media (min-width: 768px){
   nav{
+    flex-direction: row;
     width: 60px;
     flex: 0 0 60px;
     height: 100vh;
     max-height: 100vh;
-    background-color: white;
     box-shadow: #92939840 4px 0 24px 4px;
-    overflow: hidden;
-    display: flex;
-    flex-wrap: nowrap;
     transition: width ease 350ms, flex ease 350ms;
   }
   nav ul{
-    width: 100%;
     flex: 0 0 100%;
-    list-style: none;
-    padding: 0px;
-    overflow: hidden;
-    display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
   nav ul:first-child{
+    background-color: inherit;
     flex: 0 0 0%;
     transition: width ease-in-out 300ms;
+  }
+  nav ul:first-child li{
+    display: block;
+  }
+  nav ul:last-child h1{
+    display: block;
   }
   nav ul h1, nav ul li{
     white-space: nowrap;
@@ -75,32 +94,52 @@ img{width: 100%}
     opacity: .2;
     transition: opacity ease 350ms;
   }
-  
+}
+
+/*Main section*/
+main{
+  height: calc( 100vh - var(--nav-height));
+  padding: 0px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+
+  /*For paralax images*/
+	perspective: 1px;
+}
+img.hero,
+main>header,
+main>section{
+  opacity: 1;
+  scroll-snap-align: start;
+  margin: 0;
+  width: 90vw;
+  flex: 0 0 90vw;
+}
+h2{
+  margin: 0 0 .7em;
+}
+@media (min-width: 768px){
   main{
     height: 100vh;
     max-height: 100vh;
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
   }
   img.hero,
   main>header,
   main>section{
-    opacity: 1;
-    scroll-snap-align: start;
-    margin: 0;
     width: 45vw;
     flex: 0 0 45vw;
-  }
-  img{
-    width: initial;
   }
 }
 
 /*Hero image*/
+img{
+  width: initial;
+  max-width: 100%;
+}
 img.hero{
   padding: 0;
   background-color: #151516;
@@ -108,7 +147,7 @@ img.hero{
   object-fit: cover;
 }
 
-/*Header page*/
+/*Main Header */
 main>header{
   padding: 20px 9vw;
   display: grid;
@@ -129,7 +168,8 @@ header footer ul li{
 header footer ul li span{
   display: none;
 }
-/*Home Paralax images*/
+
+/*Main sections*/
 main>section{
   display: grid;
   grid-template-columns: 1fr;
@@ -140,22 +180,34 @@ main>section:last-child{
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas: "." "image" ".";
 }
-
+figure{
+  padding: 15px;
+  max-width: 410px;
+}
 .img1{
   grid-area: image1;
-  transform: translateZ(.1px) scale(0.895);
 }
 .img2{
   grid-area: image2;
-  transform: translateZ(-.1px) scale(1.095);
 }
 .img3{
   grid-area: image;
-  transform: translateZ(.1px) scale(0.895);
+}
+@media (min-width: 768px){
+  .img1{
+    transform: translateZ(.1px) scale(0.895);
+  }
+  .img2{
+    transform: translateZ(-.1px) scale(1.095);
+  }
+  .img3{
+    transform: translateZ(.1px) scale(0.895);
+  }
 }
 
-
-#scroll-indicator{
+/*Scroll helper buttons*/
+#scroll-indicator,
+#scroll-back{
   display: none;
   position: fixed;
   top: 50%;
@@ -164,6 +216,14 @@ main>section:last-child{
   font-size: 32px;
   color: #bac0ca99;
 }
-#scroll-indicator.show{
-  display: block;
+
+#scroll-back{
+  left: 70px;
+  right: inherit;
+}
+@media (min-width: 768px){
+  #scroll-indicator.show,
+  #scroll-back.show{
+    display: block;
+  }
 }
